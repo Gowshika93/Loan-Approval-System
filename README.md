@@ -13,7 +13,7 @@ Flow
 
 1. Client
 
-2. Api Gateway
+2. Api Gateway 
 
 3. Microservices layer
   User Service
