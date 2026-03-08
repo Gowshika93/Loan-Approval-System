@@ -1,0 +1,55 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: document-notification-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/notification_db?useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: Gowshika@93
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: false
+  config:
+    import: optional:configserver:http://localhost:8888
+kafka:
+  bootstrap-servers: localhost:9092
+  topics:
+    document-uploaded: document.uploaded.topic
+    document-verified: document.verified.topic
+    notification-events: notification.events.topic
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+storage:
+  location: ./uploaded-docs
+  
+auth:
+    public-key-url: http://localhost:8080/api/auth/public-key
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+
+logging:
+  level:
+    root: INFO
+    com.loan.bank: DEBUG
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html

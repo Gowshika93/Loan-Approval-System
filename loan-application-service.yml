@@ -1,0 +1,53 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: loan-application-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/loan_service_db?useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: Gowshika@93
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  config:
+    import: optional:configserver:http://localhost:8888
+
+auth:
+   public-key-url: http://localhost:8080/api/auth/public-key
+
+customer:
+   service-url: http://localhost:8082/api/customers
+
+notification:
+   service-url: http://localhost:8090/api/notifications/send
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+kafka:
+    bootstrap-servers: localhost:9092
+    topics:
+      document-uploaded: document.uploaded.topic
+      document-verified: document.verified.topic
+      notification-events: notification.events.topic
+      loan-approved: loan.approved.topic 
+      loan-payment: loan.payment.topic 
+
+management:
+   tracing:
+     sampling:
+       probability: 1.0
+   zipkin:
+     tracing:
+       endpoint: http://localhost:9411/api/v2/spans
