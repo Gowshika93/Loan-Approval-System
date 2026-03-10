@@ -4,23 +4,29 @@ server:
 spring:
   application:
     name: document-notification-service
+
   datasource:
     url: jdbc:mysql://localhost:3306/notification_db?useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: Gowshika@93
     driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     hibernate:
       ddl-auto: update
-      show-sql: false
+    show-sql: false
+
   config:
     import: optional:configserver:http://localhost:8888
+
 kafka:
   bootstrap-servers: localhost:9092
   topics:
     document-uploaded: document.uploaded.topic
     document-verified: document.verified.topic
     notification-events: notification.events.topic
+    loan-approved: loan.approved.topic
+    loan-payment: loan.payment.topic
 
 eureka:
   client:
@@ -31,9 +37,9 @@ eureka:
 
 storage:
   location: ./uploaded-docs
-  
+
 auth:
-    public-key-url: http://localhost:8080/api/auth/public-key
+  public-key-url: http://localhost:8080/api/auth/public-key
 
 management:
   tracing:
