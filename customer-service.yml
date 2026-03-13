@@ -32,7 +32,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
-    registry-fetch-interval-seconds: 5
+    registry-fetch-interval-seconds: 6
 management:
   tracing:
     enabled: false
