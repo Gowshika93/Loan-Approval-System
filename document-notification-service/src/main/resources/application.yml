@@ -1,0 +1,75 @@
+server:
+  port: 8090
+  tomcat:
+    max-http-form-post-size: -1    # -1 means unlimited
+    max-swallow-size: -1           # -1 means unlimited
+
+spring:
+  application:
+    name: document-notification-service
+  cloud:
+    config:
+      enabled: false
+  datasource:
+    url: jdbc:mysql://localhost:3306/notification_db?useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: Gowshika@93
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 50MB
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
+
+kafka:
+  bootstrap-servers: localhost:9092
+  topics:
+    document-uploaded: document.uploaded.topic
+    document-verified: document.verified.topic
+    notification-events: notification.events.topic
+    loan-approved: loan.approved.topic
+    loan-payment: loan.payment.topic
+
+auth:
+  public-key-url: http://localhost:8080/api/auth/public-key
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+storage:
+  location: ./uploaded-docs
+
+management:
+  tracing:
+    enabled: false
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  level:
+    root: INFO
+    com.bank.loan: DEBUG
