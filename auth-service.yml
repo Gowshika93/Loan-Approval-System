@@ -1,0 +1,49 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: auth-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/auth_service_db?useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: Gowshika@93
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  config:
+    import: optional:configserver:http://localhost:8888
+  cloud:
+    config:
+      fail-fast: true
+      retry:
+        max-attempts: 3
+        initial-interval: 2000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    registry-fetch-interval-seconds: 5
+
+jwt:
+  expiration-ms: 3600000
+
+management:
+  tracing:
+    enabled: false
+#    sampling:
+#      probability: 1.0
+#  zipkin:
+#    tracing:
+#      endpoint: http://localhost:9411/api/v2/spans
+
+logging:
+  level:
+    root: INFO
+    com.bank.auth: DEBUG

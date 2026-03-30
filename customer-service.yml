@@ -1,0 +1,54 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: customer-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/customer_service_db?useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: Gowshika@93
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  config:
+    import: optional:configserver:http://localhost:8888
+  cloud:
+    config:
+      fail-fast: true
+      retry:
+        max-attempts: 3
+        initial-interval: 2000
+
+auth:
+  public-key-url: http://localhost:8080/api/auth/public-key
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    registry-fetch-interval-seconds: 6
+management:
+  tracing:
+    enabled: false
+#    sampling:
+#      probability: 1.0
+#  zipkin:
+#    tracing:
+#      endpoint: http://localhost:9411/api/v2/spans
+
+logging:
+  level:
+    root: INFO
+    com.bank.customer: DEBUG
+springdoc:
+  api-docs:
+    path: /v3/api-docs         # default API spec endpoint
+  swagger-ui:
+    path: /swagger-ui.html      # Swagger UI URL
+
