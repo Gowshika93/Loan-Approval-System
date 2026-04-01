@@ -23,4 +23,5 @@ cat > .gitignore << 'EOF'
 # OS files
 .DS_Store
 Thumbs.db
-EOF
+EOF.metadata/ 
+*/target/ 
